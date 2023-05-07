@@ -3,9 +3,11 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 html {
     font-family: "Montserrat", sans-serif;
 }
+
 body {
     background: #eee;
     padding: 0 16px;
@@ -24,6 +26,12 @@ header h1 {
     font-weight: 200;
 }
 
+.App-signout-button {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+}
+
 footer {
     position: absolute;
     text-align: center;
@@ -35,6 +43,7 @@ footer {
 footer p {
     color: #ccc;
 }
+
 .note {
     background: #fff;
     border-radius: 7px;
@@ -44,10 +53,12 @@ footer p {
     margin: 16px;
     float: left;
 }
+
 .note h1 {
     font-size: 1.1em;
     margin-bottom: 6px;
 }
+
 .note p {
     font-size: 1.1em;
     margin-bottom: 10px;
@@ -76,6 +87,7 @@ form.create-note {
     border-radius: 7px;
     box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
+
 form.create-note input,
 form.create-note textarea {
     width: 100%;
@@ -86,6 +98,7 @@ form.create-note textarea {
     font-family: inherit;
     resize: none;
 }
+
 form.create-note button {
     position: absolute;
     right: 18px;
@@ -99,4 +112,12 @@ form.create-note button {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     outline: none;
+}
+
+body .aws-amplify-react-full-page-form-section {
+    background-color: purple;
+}
+
+body .aws-amplify-react-full-page-form-section a {
+    color: purple;
 }

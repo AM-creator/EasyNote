@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import Box from "./Box";
+import {withAuthenticator} from '@aws-amplify/ui-react';
+import "@aws-amplify/ui-react/styles.css";
 
-function App() {
+
+
+function App({signOut}) {
     const [notes, setNotes] = useState([]);
 
     function addNote(newNote) {
@@ -22,6 +26,7 @@ function App() {
     return (
         <div>
             <Header />
+            <button className="App-signout-button" onClick={signOut}>Sign Out</button>
             <Box onAdd={addNote} />
             {notes.map((noteItem, index) => {
                 return (
@@ -39,4 +44,4 @@ function App() {
     );
 }
 
-export default App;
+export default withAuthenticator(App);
