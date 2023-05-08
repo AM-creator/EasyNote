@@ -28,7 +28,7 @@ header h1 {
 
 .App-signout-button {
     position: absolute;
-    top: 15%;
+    top: 25px;
     right: 16px;
 }
 
@@ -113,3 +113,35 @@ form.create-note button {
     cursor: pointer;
     outline: none;
 }
+
+[data-amplify-authenticator] {
+    color:#ce84ce;
+}
+
+.amplify-button[data-variation='primary'] {
+    background: #ce84ce;
+}
+.amplify-button[data-variation='primary']:hover {
+    background: #780678;
+}
+.amplify-tabs-item[role="tab"][data-state="inactive"]{
+    color:#ce84ce;
+    border-color: #ce84ce;
+}
+
+.amplify-tabs-item[role="tab"][data-state="active"]{
+    color:#780678;
+    border-color: #780678;
+}
+
+.amplify-button[data-variation="link"] {
+    color:#ce84ce;
+}
+
+.amplify-button[data-variation="link"]:hover{
+    color:#780678;
+    background:none;
+}
+
+
+
