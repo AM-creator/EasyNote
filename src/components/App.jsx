@@ -63,8 +63,8 @@ function App({ signOut }) {
                 <Note
                     key={noteItem.id}
                     id={noteItem.id}
-                    title={noteItem.name}
-                    content={noteItem.description}
+                    name={noteItem.name}
+                    description={noteItem.description}
                     onDelete={deleteNote}
                 />
             ))}
