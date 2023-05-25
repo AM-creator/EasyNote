@@ -8,8 +8,8 @@ import { createNote as createNoteMutation } from "../graphql/mutations";
 function Box(props) {
     const [isExpanded, setExpanded] = useState(false);
     const [note, setNote] = useState({
-        title: "",
-        content: ""
+        name: "",
+        description: ""
     });
 
     function handleChange(event) {
@@ -19,10 +19,10 @@ function Box(props) {
 
     async function submitNote() {
         try {
-            const { title, content } = note;
+            const { name, description } = note;
             const newNote = {
-                title,
-                content
+                name,
+                description
             };
 
             await API.graphql(graphqlOperation(createNoteMutation, { input: newNote }));
@@ -30,8 +30,8 @@ function Box(props) {
             props.onAdd(newNote);
 
             setNote({
-                title: "",
-                content: ""
+                name: "",
+                description: ""
             });
         } catch (error) {
             console.log("Error creating note:", error);
@@ -47,17 +47,17 @@ function Box(props) {
             <form className="create-note">
                 {isExpanded && (
                     <input
-                        name="title"
+                        name="name"
                         onChange={handleChange}
-                        value={note.title}
+                        value={note.name}
                         placeholder="Title"
                     />
                 )}
                 <textarea
                     onClick={expand}
-                    name="content"
+                    name="description"
                     onChange={handleChange}
-                    value={note.content}
+                    value={note.description}
                     placeholder="Note"
                     rows={isExpanded ? 3 : 1}
                 />

@@ -28,8 +28,8 @@ function App({ signOut }) {
     async function createNote(event) {
         const form = new FormData(event.target);
         const data = {
-            name: form.get("title"),
-            description: form.get("content"),
+            name: form.get("name"),
+            description: form.get("description"),
         };
 
         // Create the note in the backend
@@ -56,13 +56,13 @@ function App({ signOut }) {
             <Header />
             <button className="App-signout-button" onClick={signOut}>Sign Out</button>
             <Box onAdd={createNote} />
-            {notes.map((noteItem, index) => {
+            {notes.map((noteItem) => {
                 return (
                     <Note
-                        key={index}
-                        id={index}
-                        title={noteItem.title}
-                        content={noteItem.content}
+                        key={noteItem.id}
+                        id={noteItem.id}
+                        title={noteItem.name}
+                        content={noteItem.description}
                         onDelete={deleteNote}
                     />
                 );
