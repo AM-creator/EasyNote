@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import Zoom from '@mui/material/Zoom';
+import { API, graphqlOperation } from "aws-amplify";
+import { createNote as createNoteMutation } from "../graphql/mutations";
 
-function Box (props) {
+function Box(props) {
     const [isExpanded, setExpanded] = useState(false);
     const [note, setNote] = useState({
         title: "",
@@ -12,31 +14,45 @@ function Box (props) {
 
     function handleChange(event) {
         const { name, value } = event.target;
-        setNote(prevNote => ({...prevNote, [name]: value}));
+        setNote(prevNote => ({ ...prevNote, [name]: value }));
     }
 
-    function submitNote(event) {
-        props.onAdd(note);
-        setNote({
-            title: "",
-            content: ""
-        });
-        event.preventDefault();
+    async function submitNote() {
+        try {
+            const { title, content } = note;
+            const newNote = {
+                title,
+                content
+            };
+
+            await API.graphql(graphqlOperation(createNoteMutation, { input: newNote }));
+
+            props.onAdd(newNote);
+
+            setNote({
+                title: "",
+                content: ""
+            });
+        } catch (error) {
+            console.log("Error creating note:", error);
+        }
     }
 
-    function expand(){
+    function expand() {
         setExpanded(true);
     }
 
     return (
         <div>
             <form className="create-note">
-                {isExpanded && (<input
-                    name="title"
-                    onChange={handleChange}
-                    value={note.title}
-                    placeholder="Title"
-                />)}
+                {isExpanded && (
+                    <input
+                        name="title"
+                        onChange={handleChange}
+                        value={note.title}
+                        placeholder="Title"
+                    />
+                )}
                 <textarea
                     onClick={expand}
                     name="content"
@@ -46,8 +62,8 @@ function Box (props) {
                     rows={isExpanded ? 3 : 1}
                 />
                 <Zoom in={isExpanded}>
-                <Fab onClick={submitNote}>
-                    <AddIcon />
+                    <Fab onClick={submitNote}>
+                        <AddIcon />
                     </Fab>
                 </Zoom>
             </form>
@@ -55,4 +71,4 @@ function Box (props) {
     );
 }
 
-export default Box ;
+export default Box;

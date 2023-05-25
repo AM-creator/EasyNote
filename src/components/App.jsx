@@ -4,7 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import Box from "./Box";
-import {withAuthenticator} from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { API } from "aws-amplify";
 import { listNotes } from "../graphql/queries";
 import {
@@ -12,27 +12,24 @@ import {
     deleteNote as deleteNoteMutation,
 } from "../graphql/mutations";
 
-
-
-function App({signOut}) {
+function App({ signOut }) {
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
         fetchNotes();
     }, []);
 
-   async function fetchNotes() {
+    async function fetchNotes() {
         const apiData = await API.graphql({ query: listNotes });
         const notesFromAPI = apiData.data.listNotes.items;
         setNotes(notesFromAPI);
     }
 
-   async function createNote(event) {
-        event.preventDefault();
+    async function createNote(event) {
         const form = new FormData(event.target);
         const data = {
-            name: form.get("name"),
-            description: form.get("description"),
+            name: form.get("title"),
+            description: form.get("content"),
         };
 
         // Create the note in the backend
@@ -44,7 +41,6 @@ function App({signOut}) {
         fetchNotes();
         event.target.reset();
     }
-
 
     async function deleteNote({ id }) {
         const newNotes = notes.filter((note) => note.id !== id);
