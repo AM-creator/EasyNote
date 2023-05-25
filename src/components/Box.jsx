@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import Zoom from '@mui/material/Zoom';
-import { API, graphqlOperation } from "aws-amplify";
-import { createNote as createNoteMutation } from "../graphql/mutations";
 
 function Box(props) {
     const [isExpanded, setExpanded] = useState(false);
@@ -24,15 +22,13 @@ function Box(props) {
                 name,
                 description
             };
-
-            await API.graphql(graphqlOperation(createNoteMutation, { input: newNote }));
-
-            props.onAdd(newNote);
-
-            setNote({
-                name: "",
-                description: ""
-            });
+            if (note.name.trim() !== "" || note.description.trim() !== "") {
+                props.onAdd(newNote);
+                setNote({
+                    name: "",
+                    description: ""
+                });
+            }
         } catch (error) {
             console.log("Error creating note:", error);
         }

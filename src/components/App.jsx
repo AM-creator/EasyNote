@@ -20,35 +20,38 @@ function App({ signOut }) {
     }, []);
 
     async function fetchNotes() {
-        const apiData = await API.graphql({ query: listNotes });
-        const notesFromAPI = apiData.data.listNotes.items;
-        setNotes(notesFromAPI);
+        try {
+            const apiData = await API.graphql({ query: listNotes });
+            const notesFromAPI = apiData.data.listNotes.items;
+            setNotes(notesFromAPI);
+        } catch (error) {
+            console.log("Error fetching notes:", error);
+        }
     }
 
-    async function createNote(event) {
-        const form = new FormData(event.target);
-        const data = {
-            name: form.get("name"),
-            description: form.get("description"),
-        };
-
-        // Create the note in the backend
-        await API.graphql({
-            query: createNoteMutation,
-            variables: { input: data },
-        });
-
-        fetchNotes();
-        event.target.reset();
+    async function createNote(newNote) {
+        try {
+            await API.graphql({
+                query: createNoteMutation,
+                variables: { input: newNote },
+            });
+            fetchNotes();
+        } catch (error) {
+            console.log("Error creating note:", error);
+        }
     }
 
     async function deleteNote({ id }) {
         const newNotes = notes.filter((note) => note.id !== id);
         setNotes(newNotes);
-        await API.graphql({
-            query: deleteNoteMutation,
-            variables: { input: { id } },
-        });
+        try {
+            await API.graphql({
+                query: deleteNoteMutation,
+                variables: { input: { id } },
+            });
+        } catch (error) {
+            console.log("Error deleting note:", error);
+        }
     }
 
     return (
@@ -56,17 +59,15 @@ function App({ signOut }) {
             <Header />
             <button className="App-signout-button" onClick={signOut}>Sign Out</button>
             <Box onAdd={createNote} />
-            {notes.map((noteItem) => {
-                return (
-                    <Note
-                        key={noteItem.id}
-                        id={noteItem.id}
-                        title={noteItem.name}
-                        content={noteItem.description}
-                        onDelete={deleteNote}
-                    />
-                );
-            })}
+            {notes.map((noteItem) => (
+                <Note
+                    key={noteItem.id}
+                    id={noteItem.id}
+                    title={noteItem.name}
+                    content={noteItem.description}
+                    onDelete={deleteNote}
+                />
+            ))}
             <Footer />
         </div>
     );
