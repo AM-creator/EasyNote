@@ -35,22 +35,27 @@ function App({ signOut }) {
                 query: createNoteMutation,
                 variables: { input: newNote },
             });
-            fetchNotes();
+            setNotes(prevNotes => {
+                return [...prevNotes, newNote];
+            });
         } catch (error) {
             console.log("Error creating note:", error);
         }
     }
 
-    async function deleteNote({ id }) {
-        const newNotes = notes.filter((note) => note.id !== id);
-        setNotes(newNotes);
+    async function deleteNote(id) {
         try {
             await API.graphql({
                 query: deleteNoteMutation,
                 variables: { input: { id } },
             });
+            setNotes(prevNotes => {
+                return prevNotes.filter(noteItem => noteItem.id !== id);
+            });
         } catch (error) {
             console.log("Error deleting note:", error);
+            // Revert the local state back to its previous state
+            fetchNotes();
         }
     }
 

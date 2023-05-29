@@ -15,24 +15,21 @@ function Box(props) {
         setNote(prevNote => ({ ...prevNote, [name]: value }));
     }
 
-    async function submitNote() {
+    async function submitNote(event) {
         try {
-            const { name, description } = note;
-            const newNote = {
-                name,
-                description
-            };
             if (note.name.trim() !== "" || note.description.trim() !== "") {
-                props.onAdd(newNote);
+                props.onAdd(note);
                 setNote({
                     name: "",
                     description: ""
                 });
+                event.preventDefault();
             }
         } catch (error) {
             console.log("Error creating note:", error);
         }
     }
+
 
     function expand() {
         setExpanded(true);
