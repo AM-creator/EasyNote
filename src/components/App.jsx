@@ -21,7 +21,11 @@ function App({ signOut }) {
 
     async function fetchNotes() {
         try {
-            const apiData = await API.graphql({ query: listNotes });
+            // Specify the sort direction as DESC
+            const apiData = await API.graphql({
+                query: listNotes,
+                variables: { sortDirection: 'DESC' }
+            });
             const notesFromAPI = apiData.data.listNotes.items;
             setNotes(notesFromAPI);
         } catch (error) {
@@ -35,9 +39,9 @@ function App({ signOut }) {
                 query: createNoteMutation,
                 variables: { input: newNote },
             });
-        // Assuming the mutation returns the created note object
+            // Assuming the mutation returns the created note object
             const createdNote = response.data.createNote;
-            const updatedNotes = [...notes, createdNote];
+            const updatedNotes = [createdNote, ...notes]; // Add the new note at the beginning
 
             setNotes(updatedNotes);
         } catch (error) {
