@@ -31,17 +31,20 @@ function App({ signOut }) {
 
     async function createNote(newNote) {
         try {
-            await API.graphql({
+            const response = await API.graphql({
                 query: createNoteMutation,
                 variables: { input: newNote },
             });
-            setNotes(prevNotes => {
-                return [...prevNotes, newNote];
-            });
+        // Assuming the mutation returns the created note object
+            const createdNote = response.data.createNote;
+            const updatedNotes = [...notes, createdNote];
+
+            setNotes(updatedNotes);
         } catch (error) {
             console.log("Error creating note:", error);
         }
     }
+
 
     async function deleteNote(id) {
         try {
