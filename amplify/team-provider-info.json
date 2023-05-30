@@ -1,4 +1,22 @@
 {
+  "main": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-easynote-main-12127-authRole",
+      "UnauthRoleArn": "arn:aws:iam::187067194141:role/amplify-easynote-main-12127-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::187067194141:role/amplify-easynote-main-12127-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-easynote-main-12127-deployment",
+      "UnauthRoleName": "amplify-easynote-main-12127-unauthRole",
+      "StackName": "amplify-easynote-main-12127",
+      "StackId": "arn:aws:cloudformation:us-east-2:187067194141:stack/amplify-easynote-main-12127/78b9e630-fa9a-11ed-81d0-0231d4a82c6d",
+      "AmplifyAppId": "d39j0r5fwgfnrc"
+    },
+    "categories": {
+      "auth": {
+        "easynotece834686": {}
+      }
+    }
+  },
   "collen": {
     "awscloudformation": {
       "AuthRoleName": "amplify-easynote-collen-11944-authRole",
