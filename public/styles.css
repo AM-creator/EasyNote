@@ -18,6 +18,18 @@ header {
     margin: auto -16px;
     padding: 16px 32px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    margin-right: 10px;
 }
 
 header h1 {
@@ -122,18 +134,18 @@ form.create-note button {
 }
 
 [data-amplify-authenticator] {
-    color:#ce84ce;
+    color:#CF9FFF;
 }
 
 .amplify-button[data-variation='primary'] {
-    background: #ce84ce;
+    background: #CF9FFF;
 }
 .amplify-button[data-variation='primary']:hover {
     background: #780678;
 }
 .amplify-tabs-item[role="tab"][data-state="inactive"]{
-    color:#ce84ce;
-    border-color: #ce84ce;
+    color:#CF9FFF;
+    border-color: #CF9FFF;
 }
 
 .amplify-tabs-item[role="tab"][data-state="active"]{
@@ -142,7 +154,7 @@ form.create-note button {
 }
 
 .amplify-button[data-variation="link"] {
-    color:#ce84ce;
+    color:#CF9FFF;
 }
 
 .amplify-button[data-variation="link"]:hover{
