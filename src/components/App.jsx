@@ -16,11 +16,13 @@ function App({ signOut }) {
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
+        // Fetch notes on component mount
         fetchNotes();
     }, []);
 
     async function fetchNotes() {
         try {
+            // Fetch notes from the API
             const apiData = await API.graphql({
                 query: listNotes,
                 variables: {
@@ -29,6 +31,7 @@ function App({ signOut }) {
                 }
             });
 
+            // Process and update notes
             const notesFromAPI = apiData.data.listNotes.items;
             await Promise.all(
                 notesFromAPI.map(async (note) => {
@@ -52,10 +55,12 @@ function App({ signOut }) {
 
     async function createNote(newNote) {
         try {
+            // Upload image to storage if it exists
             if (!!newNote.image) {
-                await Storage.put(newNote.name, newNote.image); // Upload the image to storage
+                await Storage.put(newNote.name, newNote.image);
             }
 
+            // Create the note through API
             const response = await API.graphql({
                 query: createNoteMutation,
                 variables: { input: newNote },
@@ -63,12 +68,14 @@ function App({ signOut }) {
 
             const createdNote = response.data.createNote;
 
+            // Get image URL if it exists
             if (!!newNote.image) {
-                const url = await Storage.get(newNote.name); // Get the image URL after upload
+                const url = await Storage.get(newNote.name);
                 createdNote.image = url;
             }
 
-            const updatedNotes = [createdNote, ...notes]; // Prepend the new note to the existing notes array
+            // Update the notes array with the new note
+            const updatedNotes = [createdNote, ...notes];
             setNotes(updatedNotes);
         } catch (error) {
             console.log("Error creating note:", error);
@@ -77,12 +84,16 @@ function App({ signOut }) {
 
     async function deleteNote(id, name) {
         try {
+            // Delete the note through API
             await API.graphql({
                 query: deleteNoteMutation,
                 variables: { input: { id } },
             });
+
             // Remove the associated image from storage
             await Storage.remove(name);
+
+            // Update the notes array by filtering out the deleted note
             setNotes(prevNotes => prevNotes.filter(noteItem => noteItem.id !== id));
         } catch (error) {
             console.log("Error deleting note:", error);
@@ -95,7 +106,9 @@ function App({ signOut }) {
         <div>
             <Header />
             <button className="App-signout-button" onClick={signOut}>Sign Out</button>
+            {/* Component for creating new notes */}
             <Box onAdd={createNote} />
+            {/* Display existing notes */}
             {notes.map((note) => (
                 <Note
                     key={note.id}

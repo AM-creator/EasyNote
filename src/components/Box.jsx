@@ -26,6 +26,7 @@ function Box(props) {
     function submitNote(event) {
         event.preventDefault();
 
+        // Check if any of the fields have content before adding the note
         if (note.name.trim() !== "" || note.description.trim() !== "" || note.image) {
             props.onAdd(note);
             setNote({
@@ -44,6 +45,7 @@ function Box(props) {
         <div>
             <form className="create-note">
                 {isExpanded && (
+                    // Input field for note title
                     <input
                         name="name"
                         onChange={handleChange}
@@ -51,6 +53,7 @@ function Box(props) {
                         placeholder="Title"
                     />
                 )}
+                {/* Textarea for note description */}
                 <textarea
                     onClick={expand}
                     name="description"
@@ -60,16 +63,20 @@ function Box(props) {
                     rows={isExpanded ? 3 : 1}
                 />
                 {note.image && (
+                    // Display uploaded image
                     <Image src={URL.createObjectURL(note.image)} alt="Uploaded Image" />
                 )}
                 <Zoom in={isExpanded}>
+                    {/* Button to submit the note */}
                     <Fab onClick={submitNote}>
                         <AddIcon />
                     </Fab>
                 </Zoom>
                 <label htmlFor="image-input" className="icon-wrapper">
+                    {/* Icon for adding images */}
                     <InsertPhotoIcon />
                 </label>
+                {/* Input field for uploading images */}
                 <input
                     id="image-input"
                     type="file"

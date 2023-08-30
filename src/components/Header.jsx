@@ -9,7 +9,7 @@ function Header() {
                     alt="Logo"
                     className="logo"
                 />
-                <h1>Smart Note</h1>
+                <h1>Easy Note</h1>
             </div>
         </header>
     );
